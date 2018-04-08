@@ -17,12 +17,22 @@ y = ( SCREEN_SIZE[1] - text_surface.get_height() ) / 2
 
 background = pygame.image.load(background_image_filename).convert()
 
+paceMe=False
+pacer=0
+
 while True:
+    pacer+=1
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit()
+
+        if (event.type == KEYDOWN):
+            if event.key == K_p:
+                paceMe=True
+            else:
+                paceMe=False
 
     screen.blit(background, (0,0))
 
@@ -30,6 +40,13 @@ while True:
     if x < -text_surface.get_width():
         x = 0
 
-    screen.blit(text_surface, (x, y))
-    screen.blit(text_surface, (x+text_surface.get_width(), y))
-    pygame.display.update()
+    if paceMe:
+        if pacer>=200:
+            screen.blit(text_surface, (x, y))
+            screen.blit(text_surface, (x+text_surface.get_width(), y))
+            pygame.display.update()
+            pacer=0
+    else:
+        screen.blit(text_surface, (x, y))
+        screen.blit(text_surface, (x+text_surface.get_width(), y))
+        pygame.display.update()
