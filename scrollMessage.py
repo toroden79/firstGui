@@ -19,6 +19,7 @@ background = pygame.image.load(background_image_filename).convert()
 
 paceMe=False
 pacer=0
+paceInterval=0
 
 while True:
     pacer+=1
@@ -31,6 +32,10 @@ while True:
         if (event.type == KEYDOWN):
             if event.key == K_p:
                 paceMe=True
+                paceInterval=200
+            elif event.key == K_s:
+                paceMe=True
+                paceInterval=2000
             else:
                 paceMe=False
 
@@ -41,7 +46,7 @@ while True:
         x = 0
 
     if paceMe:
-        if pacer>=200:
+        if pacer>=paceInterval:
             screen.blit(text_surface, (x, y))
             screen.blit(text_surface, (x+text_surface.get_width(), y))
             pygame.display.update()
